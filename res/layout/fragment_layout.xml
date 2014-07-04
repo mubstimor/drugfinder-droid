@@ -1,0 +1,51 @@
+<com.drugfinder.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#f8f9fe" >
+    
+    <Button
+        android:id="@+id/btn_news_feed"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/news_feed_default"
+        android:text="Search Drug" />
+    
+	
+    <Button
+        android:id="@+id/btn_friends"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/friends_default"
+        android:text="Search Stores" />
+    
+	
+    <Button
+        android:id="@+id/btn_messages"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/messages_default"
+        android:text="All Drugs" />
+	
+    
+    <Button
+        android:id="@+id/btn_places"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/places_default"
+        android:text="Nearest stores" />
+
+<!--     
+    <Button
+        android:id="@+id/btn_events"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/events_default"
+        android:text="Events" />
+
+    
+    <Button
+        android:id="@+id/btn_photos"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/photos_default"
+        android:text="Photos" />
+        
+         -->
+
+</com.drugfinder.DashboardLayout>
