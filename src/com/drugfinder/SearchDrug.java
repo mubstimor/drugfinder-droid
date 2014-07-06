@@ -25,8 +25,9 @@ import com.drugfinder.library.FetchDrugTask;
 
 public class SearchDrug extends SherlockActivity implements ItemListScreen {
 	
-	FetchDrugTask fetchBusesTask = new FetchDrugTask();
+	FetchDrugTask fetchDrugsTask = new FetchDrugTask();
 	ConnectionDetector cd; 		// Internet detector
+	EditText search;
 
 	 @Override
 	  protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +40,16 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 	    ActionBar actionBar = getSupportActionBar();
 	    // add the custom view to the action bar
 	    actionBar.setCustomView(R.layout.activity_search);
-	    EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
+	    search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
 	    search.setOnEditorActionListener(new OnEditorActionListener() {
 
 	      @Override
 	      public boolean onEditorAction(TextView v, int actionId,
 	          KeyEvent event) {
 	        Toast.makeText(SearchDrug.this, "Search triggered", Toast.LENGTH_LONG).show();
+	        String drug = search.getText().toString();
 	        showProgressBar();
-	        downloadData();
+	        downloadData(drug);
 	        return false;
 	      }
 	    });
@@ -55,14 +57,14 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 	        | ActionBar.DISPLAY_SHOW_HOME);
 	  }
 
-	 private void downloadData(){
+	 private void downloadData(String drugName){
 		 if (!cd.isConnectingToInternet()){	            
 	            Toast.makeText(getApplicationContext(), "Connect to Internet First",Toast.LENGTH_LONG).show();
 	            return;
 	        }else{
 	        	//to get buses along a route
-	      		fetchBusesTask.listScreen = this;
-	      		fetchBusesTask.execute("http://ptts.herokuapp.com/getbuslocations/"+"1"+"/?format=json");
+	      		fetchDrugsTask.listScreen = this;
+	      		fetchDrugsTask.execute("http://smsme.info/drugfinder/api/include/searchDrug.php?drug="+drugName.trim());
 	        }
 	 }
 	  private void showProgressBar(){
@@ -76,8 +78,8 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 	    }
 	  
 	  @Override
-		public void displayList(final ArrayList<HashMap<String, String>> busItems) {		
-			DrugListAdapter adapter = new DrugListAdapter(this, busItems);
+		public void displayList(final ArrayList<HashMap<String, String>> drugItems) {		
+			DrugListAdapter adapter = new DrugListAdapter(this, drugItems);
 	        ListView listView = (ListView)findViewById(android.R.id.list);
 	        listView.setAdapter(adapter);
 	        makeProgressBarDisappear();		
@@ -87,11 +89,11 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {							
-					Toast.makeText(getApplicationContext(), "clicked list item "+busItems.get(position).get(FetchDrugTask.getKeyBusid()), Toast.LENGTH_SHORT).show();
-					Intent i = new Intent(getApplicationContext(), DrugDetails.class);
-			        i.putExtra("bus_id", busItems.get(position).get(FetchDrugTask.getKeyBusid()));
-			        i.putExtra("latitude", busItems.get(position).get(FetchDrugTask.getKeyLatitude()));
-			        i.putExtra("longitude",busItems.get(position).get(FetchDrugTask.getKeyLongitude()));
+					Toast.makeText(getApplicationContext(), "clicked list item "+drugItems.get(position).get(FetchDrugTask.getKeyName()), Toast.LENGTH_SHORT).show();
+					Intent i = new Intent(getApplicationContext(), SearchStores.class);
+			        i.putExtra(FetchDrugTask.getKeyDrugid(), drugItems.get(position).get(FetchDrugTask.getKeyDrugid()));
+//			        i.putExtra(FetchDrugTask.getKeyDescription(), drugItems.get(position).get(FetchDrugTask.getKeyDescription()));
+//			        i.putExtra(FetchDrugTask.getKeyPrescription(),drugItems.get(position).get(FetchDrugTask.getKeyPrescription()));
 			        startActivity(i);
 	 
 				}

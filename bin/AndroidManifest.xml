@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="19" />
     
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,13 +31,19 @@
             android:name="com.drugfinder.HomeDashboard"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.drugfinder.AllDrugs" >
+        <activity android:name="com.drugfinder.AllDrugs"
+            android:configChanges="orientation|screenSize"
+             >
         </activity>
-        <activity android:name="com.drugfinder.SearchDrug" >
+        <activity android:name="com.drugfinder.SearchDrug"
+            android:screenOrientation="portrait"
+             >
         </activity>
         <activity android:name="com.drugfinder.NearestStores" >
         </activity>
-        <activity android:name="com.drugfinder.SearchStores" >
+        <activity android:name="com.drugfinder.SearchStores"
+            android:configChanges="orientation|screenSize"
+             >
         </activity>
         <activity
             android:name="com.drugfinder.DrugDetails"

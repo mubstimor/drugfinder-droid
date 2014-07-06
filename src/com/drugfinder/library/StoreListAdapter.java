@@ -13,13 +13,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class DrugListAdapter extends BaseAdapter {
+public class StoreListAdapter extends BaseAdapter {
 	
 	private Activity activity;
     private ArrayList<HashMap<String, String>> data;
     private static LayoutInflater inflater=null;
 
-	 public DrugListAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+	 public StoreListAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 	        activity = a;
 	        data=d;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,8 +39,8 @@ public class DrugListAdapter extends BaseAdapter {
 	        song = data.get(position);
 	        
 	        // Setting all values in listview
-	        title.setText(song.get(FetchDrugTask.getKeyName()));
-	        artist.setText(song.get(FetchDrugTask.getKeyDescription()));
+	        title.setText(song.get(FetchStoreTask.getKeyName()));
+	        artist.setText(song.get(FetchStoreTask.getKeyAddress()));
 	        duration.setText("");
 	        
 	        return vi;

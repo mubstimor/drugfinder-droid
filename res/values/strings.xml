@@ -5,12 +5,13 @@
     <string name="app_name">DrugFinder</string>
     <string name="title_activity_photos">Photos</string>
     <string name="hello_world">Hello world!</string>
-
+    
     <!-- search -->
     <string name="hint_message">text..</string>
     <string name="hint_search">search</string>
     <string name="hint_search_drug">search for drug</string>
     <string name="search_description">search button.</string>
     <string name="title_activity_drug_details">Drug Details</string>
+    <string name="search_druglist_hint">Tap to view Stores with the drug</string>
 
 </resources>

@@ -18,15 +18,18 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class FetchDrugTask extends AsyncTask<String, Void, JSONArray> {
+public class FetchStoreTask extends AsyncTask<String, Void, JSONArray> {
 
     public ItemListScreen listScreen = null;
-    private static final String TAG_DRUGS = "drugs";
-	private static final String KEY_DRUGID = "id";
-	private static final String KEY_DESCRIPTION = "description";
-	private static final String KEY_PRESCRIPTION= "prescription";
+    private static final String TAG_STORES = "stores";
+	private static final String KEY_STOREID = "id";
+	private static final String KEY_LATITUDE = "latitude";
+	private static final String KEY_LONGITUDE= "longitude";
+	private static final String KEY_ADDRESS= "address";
+	private static final String KEY_PHONE= "phone";
+	private static final String TAG_SUCCESS= "success";
 	static final String KEY_NAME= "name";
-	JSONArray drugs = null;
+	JSONArray stores = null;
 
     @Override
     protected JSONArray doInBackground(String... urls) {
@@ -45,12 +48,16 @@ public class FetchDrugTask extends AsyncTask<String, Void, JSONArray> {
         try {
         	
            	JSONObject json = new JSONObject(responseBody);
-           	drugs = json.getJSONArray(TAG_DRUGS);
-            return drugs;           
+           	if(json.getString(TAG_SUCCESS) == "0"){
+           		throw new JSONException("Data not found");
+           	}
+           	stores = json.getJSONArray(TAG_STORES);
+                    
         } catch (JSONException e) {
-            e.printStackTrace();
+        	throw new RuntimeException(e);
         }
-        return null;
+//        return null;
+        return stores;  
     }
 
     @Override
@@ -62,16 +69,15 @@ public class FetchDrugTask extends AsyncTask<String, Void, JSONArray> {
             try {
             	HashMap<String, String> map = new HashMap<String, String>();
                 JSONObject jsonObject = todoJsonArray.getJSONObject(i);
-                map.put(getKeyDrugid(), jsonObject.getString(getKeyDrugid()));
-                map.put(getKeyDescription(), jsonObject.getString(getKeyDescription()));
-                map.put(getKeyPrescription(), jsonObject.getString(getKeyPrescription()));
+                map.put(getKeyStoreid(), jsonObject.getString(getKeyStoreid()));
+                map.put(getKeyLatitude(), jsonObject.getString(getKeyLatitude()));
+                map.put(getKeyLongitude(), jsonObject.getString(getKeyLongitude()));
                 map.put(getKeyName(), jsonObject.getString(getKeyName()));
                 
              // adding HashList to ArrayList
     			drugList.add(map);
-    			
-          //      routeItems.add(new BusItem(jsonObject.getString("bus_id"),jsonObject.getString("latitude"),jsonObject.getString("longitude")));
-                Log.i("FETCHING DATA", jsonObject.getString(getKeyDrugid()));
+    
+                Log.i("FETCHING DATA", jsonObject.getString(getKeyStoreid()));
                 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -100,15 +106,23 @@ public class FetchDrugTask extends AsyncTask<String, Void, JSONArray> {
         }
     }
 
-	public static String getKeyDrugid() {
-		return KEY_DRUGID;
+	public static String getKeyStoreid() {
+		return KEY_STOREID;
 	}
 
-	public static String getKeyDescription() {
-		return KEY_DESCRIPTION;
+	public static String getKeyLatitude() {
+		return KEY_LATITUDE;
 	}
 
-	public static String getKeyPrescription() {
-		return KEY_PRESCRIPTION;
+	public static String getKeyLongitude() {
+		return KEY_LONGITUDE;
+	}
+
+	public static String getKeyAddress() {
+		return KEY_ADDRESS;
+	}
+
+	public static String getKeyPhone() {
+		return KEY_PHONE;
 	}
 }
