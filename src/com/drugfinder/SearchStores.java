@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.drugfinder.library.ConnectionDetector;
-import com.drugfinder.library.FetchDrugTask;
 import com.drugfinder.library.FetchStoreTask;
 import com.drugfinder.library.ItemListScreen;
 import com.drugfinder.library.StoreListAdapter;
@@ -31,15 +29,7 @@ public class SearchStores extends SherlockActivity implements ItemListScreen {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_layout);
 		
-		Intent intent = getIntent();
-		String id= intent.getStringExtra(FetchDrugTask.getKeyDrugid());
-		
-		if(id != null){
-		url = "http://smsme.info/drugfinder/api/include/getStoreWithDrug.php?drug="+id.trim();
-		Log.i("Logging from another intent", url);
-		}else{
-			url = "http://smsme.info/drugfinder/api/include/getAllStores.php";;
-		}
+		url = "http://smsme.info/drugfinder/api/include/getAllStores.php";;
 		
 		cd = new ConnectionDetector(getApplicationContext());
 		
@@ -70,11 +60,14 @@ public class SearchStores extends SherlockActivity implements ItemListScreen {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {							
-				Toast.makeText(getApplicationContext(), "clicked list item "+ items.get(position).get(FetchDrugTask.getKeyName()), Toast.LENGTH_SHORT).show();
-				Intent i = new Intent(getApplicationContext(), DrugDetails.class);
-//		        i.putExtra(FetchDrugTask.getKeyDrugid(), drugItems.get(position).get(FetchDrugTask.getKeyDrugid()));
-//		        i.putExtra(FetchDrugTask.getKeyDescription(), drugItems.get(position).get(FetchDrugTask.getKeyDescription()));
-//		        i.putExtra(FetchDrugTask.getKeyPrescription(),drugItems.get(position).get(FetchDrugTask.getKeyPrescription()));
+				Toast.makeText(getApplicationContext(), "clicked list item "+ items.get(position).get(FetchStoreTask.getKeyName()), Toast.LENGTH_SHORT).show();
+				Intent i = new Intent(getApplicationContext(), DrugsInStore.class);
+		        i.putExtra(FetchStoreTask.getKeyAddress(), items.get(position).get(FetchStoreTask.getKeyAddress()));
+		        i.putExtra(FetchStoreTask.getKeyLatitude(), items.get(position).get(FetchStoreTask.getKeyLatitude()));
+		        i.putExtra(FetchStoreTask.getKeyLongitude(),items.get(position).get(FetchStoreTask.getKeyLongitude()));
+		        i.putExtra(FetchStoreTask.getKeyName(),items.get(position).get(FetchStoreTask.getKeyName()));
+		        i.putExtra(FetchStoreTask.getKeyPhone(),items.get(position).get(FetchStoreTask.getKeyPhone()));
+		        i.putExtra(FetchStoreTask.getKeyStoreid(),items.get(position).get(FetchStoreTask.getKeyStoreid()));
 		        startActivity(i);
  
 			}

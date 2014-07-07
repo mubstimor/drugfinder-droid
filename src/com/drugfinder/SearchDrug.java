@@ -61,8 +61,7 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 		 if (!cd.isConnectingToInternet()){	            
 	            Toast.makeText(getApplicationContext(), "Connect to Internet First",Toast.LENGTH_LONG).show();
 	            return;
-	        }else{
-	        	//to get buses along a route
+	        }else{	        	
 	      		fetchDrugsTask.listScreen = this;
 	      		fetchDrugsTask.execute("http://smsme.info/drugfinder/api/include/searchDrug.php?drug="+drugName.trim());
 	        }
@@ -90,7 +89,7 @@ public class SearchDrug extends SherlockActivity implements ItemListScreen {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {							
 					Toast.makeText(getApplicationContext(), "clicked list item "+drugItems.get(position).get(FetchDrugTask.getKeyName()), Toast.LENGTH_SHORT).show();
-					Intent i = new Intent(getApplicationContext(), SearchStores.class);
+					Intent i = new Intent(getApplicationContext(), StoresWithDrug.class);
 			        i.putExtra(FetchDrugTask.getKeyDrugid(), drugItems.get(position).get(FetchDrugTask.getKeyDrugid()));
 //			        i.putExtra(FetchDrugTask.getKeyDescription(), drugItems.get(position).get(FetchDrugTask.getKeyDescription()));
 //			        i.putExtra(FetchDrugTask.getKeyPrescription(),drugItems.get(position).get(FetchDrugTask.getKeyPrescription()));

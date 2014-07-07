@@ -72,6 +72,7 @@ public class FetchStoreTask extends AsyncTask<String, Void, JSONArray> {
                 map.put(getKeyStoreid(), jsonObject.getString(getKeyStoreid()));
                 map.put(getKeyLatitude(), jsonObject.getString(getKeyLatitude()));
                 map.put(getKeyLongitude(), jsonObject.getString(getKeyLongitude()));
+                map.put(getKeyAddress(), jsonObject.getString(getKeyAddress()));
                 map.put(getKeyName(), jsonObject.getString(getKeyName()));
                 
              // adding HashList to ArrayList
